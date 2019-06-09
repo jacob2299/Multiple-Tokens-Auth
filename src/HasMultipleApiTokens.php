@@ -35,7 +35,7 @@ trait HasMultipleApiTokens
         $totalActiveTokens = config('multiple-tokens-auth.active_tokens');
 
         if ($totalActiveTokens !== null && $this->tokens()->count() > $totalActiveTokens) {
-            $this->tokens()->oldest()->take($totalActiveTokens)->delete();
+            $this->tokens()->latest()->skip($totalActiveTokens)->delete();
         }
     }
 }
