@@ -3,5 +3,5 @@
 > A Laravel guard for multiple token auth
 
 ## TODO
-* Add Tests
+* README
 * Expire tokens
