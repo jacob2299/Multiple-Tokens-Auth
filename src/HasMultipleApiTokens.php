@@ -22,7 +22,10 @@ trait HasMultipleApiTokens
 
     public function removeToken($token) : void
     {
-        $this->tokens()->where('user_id', $this->getKey(), 'api_token', $token)->delete();
+        $this->tokens()
+            ->where('user_id', $this->getKey())
+            ->where('api_token', $token)
+            ->delete();
     }
     
     public function tokens() : HasMany
@@ -35,7 +38,11 @@ trait HasMultipleApiTokens
         $totalActiveTokens = config('multiple-tokens-auth.active_tokens');
 
         if ($totalActiveTokens !== null && $this->tokens()->count() > $totalActiveTokens) {
-            $this->tokens()->latest()->skip($totalActiveTokens)->delete();
+            $this->tokens()
+                ->latest()
+                ->skip($totalActiveTokens)
+                ->take($this->tokens()->count() -  $totalActiveTokens)
+                ->delete();
         }
     }
 }
